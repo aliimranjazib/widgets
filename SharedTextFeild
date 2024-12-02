@@ -1,0 +1,158 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../../utils/constants/fonts.dart';
+import '../../utils/constants/styles.dart';
+
+class SharedTextField extends StatelessWidget {
+  final TextEditingController? controller;
+  final Function(String)? onChanged;
+  final String? icon;
+  final bool obsecure;
+  final String? header;
+  final Function()? iconTap;
+  final String? Function(String?)? validator;
+  final Function()? onTap;
+  final bool? readOnly;
+  final String? hintText;
+  final bool isBordar;
+  final int maxLines;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputType? textInputType;
+  final Function(String?)? onSaved;
+  final IconData? suffixIcon;
+  final Function()? suffixOntap;
+  final AutovalidateMode? autovalidateMode;
+  final bool filled;
+  final String label;
+  final Color? filcolor;
+  final TextStyle? hintStyle;
+  final TextStyle? style;
+  final bool? inputBorder;
+  final TextStyle? labelStyle;
+  final EdgeInsetsGeometry? contentPadding;
+  const SharedTextField({
+    this.controller,
+    this.onChanged,
+    this.icon,
+    this.label = "",
+    this.obsecure = false,
+    this.iconTap,
+    this.validator,
+    this.readOnly = false,
+    this.onTap,
+    this.maxLines = 1,
+    this.hintText = "",
+    this.isBordar = false,
+    this.inputFormatters,
+    this.textInputType,
+    this.onSaved,
+    this.suffixIcon,
+    this.suffixOntap,
+    this.autovalidateMode,
+    this.filled = false,
+    this.filcolor,
+    this.hintStyle,
+    this.style,
+    this.inputBorder,
+    this.labelStyle,
+    this.contentPadding,
+    this.header,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        header == null
+            ? SizedBox()
+            : Text("$header",
+                style: kFontWeight400Size14.copyWith(color: Colors.black)),
+        SizedBox(height: 4),
+        TextFormField(
+          obscureText: obsecure,
+          autovalidateMode: autovalidateMode,
+          onChanged: onChanged ?? (v) {},
+          onSaved: onSaved ?? (v) {},
+          keyboardType: textInputType ?? TextInputType.name,
+          controller: controller,
+          validator: validator ??
+              (s) {
+                return null;
+              },
+          inputFormatters: inputFormatters,
+          onTap: onTap,
+          readOnly: readOnly!,
+          cursorColor: Colors.black,
+          maxLines: maxLines,
+          style: style ?? const TextStyle(color: Colors.black),
+          decoration: InputDecoration(
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            labelText: label.isEmpty ? null : label,
+            hintText: hintText!.isEmpty ? null : hintText,
+            filled: filled,
+            fillColor: filcolor,
+            labelStyle: labelStyle ??
+                const TextStyle(
+                    fontFamily: poppinsRegular,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xff545E72)),
+            hintStyle: hintStyle ??
+                const TextStyle(
+                    fontFamily: poppinsRegular,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xff545E72)),
+            // contentPadding: EdgeInsets.only(top: 0),
+            contentPadding: contentPadding ??
+                const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+            suffixIcon: suffixIcon == null
+                ? null
+                : InkWell(
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    onTap: suffixOntap,
+                    child: Icon(
+                      suffixIcon,
+                      color: Colors.black,
+                      size: 19,
+                    ),
+                  ),
+            prefixIcon: icon == null
+                ? null
+                : InkWell(
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    onTap: iconTap,
+                    child: Container(
+                      height: 30,
+                      width: 10,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            icon!,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+            enabledBorder:
+                inputBorder == true ? InputBorder.none : kTextfieldborder,
+            focusedBorder:
+                inputBorder == true ? InputBorder.none : kTextfieldborder,
+            border: inputBorder == true ? InputBorder.none : kTextfieldborder,
+            errorBorder:
+                inputBorder == true ? InputBorder.none : kTextfieldborder,
+            disabledBorder:
+                inputBorder == true ? InputBorder.none : kTextfieldborder,
+            focusedErrorBorder:
+                inputBorder == true ? InputBorder.none : kTextfieldborder,
+          ),
+        ),
+      ],
+    );
+  }
+}
