@@ -1,0 +1,57 @@
+import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
+
+class ShimmerWidget extends StatelessWidget {
+  const ShimmerWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0),
+            child: ShimmerPlaceholder(height: 20, width: double.infinity),
+          );
+        } else if (index == 1) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0),
+            child: ShimmerPlaceholder(height: 20, width: double.infinity),
+          );
+        } else {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: ShimmerPlaceholder(height: 100, width: double.infinity),
+          );
+        }
+      },
+      itemCount: 5,
+      separatorBuilder: (context, index) => const SizedBox(height: 16),
+    );
+  }
+}
+
+class ShimmerPlaceholder extends StatelessWidget {
+  final double height;
+  final double width;
+
+  const ShimmerPlaceholder(
+      {required this.height, required this.width, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Container(
+        height: height,
+        width: width,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+    );
+  }
+}
